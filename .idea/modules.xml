@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PermissionGenNoAnnotation.iml" filepath="$PROJECT_DIR$/PermissionGenNoAnnotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-permissiongennoannotation/lib-permissiongennoannotation.iml" filepath="$PROJECT_DIR$/lib-permissiongennoannotation/lib-permissiongennoannotation.iml" />
+    </modules>
+  </component>
+</project>
