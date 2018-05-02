@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 
 public class DetailActivity extends Activity {
@@ -18,6 +19,6 @@ public class DetailActivity extends Activity {
     public static void startToDetailActivity(Context context,String msg){
         Intent i=new Intent(context,DetailActivity.class);
         i.putExtra("msg",msg);
-        context.startActivity(i);
+        ActivityCompat.startActivity(context,i,null);
     }
 }

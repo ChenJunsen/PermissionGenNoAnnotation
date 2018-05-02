@@ -48,6 +48,11 @@
                 android:text="相机权限测试"/>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_go2Frag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳转录音授权"/>
 
     </LinearLayout>
 

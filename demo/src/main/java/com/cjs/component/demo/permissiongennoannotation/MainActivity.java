@@ -27,6 +27,7 @@ import com.cjs.component.permissiongennoannotation.PermissionGenNoAnnotation;
  */
 public class MainActivity extends Activity implements View.OnClickListener, PermissionGenNoAnnotation.RequestPermissionCallBack {
     private Button btn_audio, btn_storage_read, btn_storage_write, btn_camera;
+    private Button btn_go2Frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Perm
         btn_camera = findViewById(R.id.btn_camera);
         btn_storage_read = findViewById(R.id.btn_storage_read);
         btn_storage_write = findViewById(R.id.btn_storage_write);
+        btn_go2Frag=findViewById(R.id.btn_go2Frag);
 
         btn_audio.setOnClickListener(this);
         btn_storage_read.setOnClickListener(this);
         btn_storage_write.setOnClickListener(this);
         btn_camera.setOnClickListener(this);
+        btn_go2Frag.setOnClickListener(this);
     }
 
     @Override
@@ -82,6 +85,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Perm
                     .permissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE})
                     .requestPermissionCallBack(this)
                     .request();
+        }else if(v==btn_go2Frag){
+            Intent i=new Intent(this,FragmentDemoActivity.class);
+            startActivity(i);
         }
     }
 
