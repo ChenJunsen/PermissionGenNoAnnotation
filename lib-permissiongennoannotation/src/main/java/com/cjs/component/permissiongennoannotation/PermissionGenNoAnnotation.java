@@ -1,8 +1,8 @@
 package com.cjs.component.permissiongennoannotation;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import com.cjs.component.permissiongennoannotation.internal.Utils;
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * 描述:安卓6运行时获取权限的工具类，支持链式及静态方式调用，修改自<a href="https://github.com/lovedise/PermissionGen">PermissionGen</>的一个第三方库。
+ * 描述:安卓6运行时获取权限的工具类，支持链式及静态方式调用，支持activity和fragment,修改自<a href="https://github.com/lovedise/PermissionGen">PermissionGen</>的一个第三方库。
  * 原文件是以注解反射的方式进行界结果的解析。但是考虑到项目的扩展性，以及代码的重用性，本来想在BaseActivity里面写一个公共的
  * 获取结果的处理方法，结果发现父类注解不能被子类继承，导致无法解析获取权限的结果，因此才重写了这个库的,删掉了原库文件的所有注解部分，
  * 针对获取结果添加了一个结果回调函数{@link RequestPermissionCallBack}
@@ -85,6 +85,8 @@ public class PermissionGenNoAnnotation {
     public void request() {
         if(Utils.isOverMarshmallow()){
             requestPermissions(object, mRequestCode, mPermissions, mRequestPermissionCallBack);
+        }else{
+            doExecuteSuccess(mRequestCode, mRequestPermissionCallBack);
         }
     }
 
@@ -111,24 +113,23 @@ public class PermissionGenNoAnnotation {
      * @param permissions 权限的请求集合，参考{@link android.Manifest.permission}
      * @param requestPermissionCallBack 权限请求回调
      */
-    @TargetApi(23)
     private static void requestPermissions(Object object, int requestCode, String[] permissions, RequestPermissionCallBack requestPermissionCallBack) {
         if (!Utils.isOverMarshmallow()) {
             doExecuteSuccess(requestCode, requestPermissionCallBack);
-            return;
-        }
-        List<String> deniedPermissions = Utils.findDeniedPermissions(Utils.getActivity(object), permissions);
+        }else{
+            List<String> deniedPermissions = Utils.findDeniedPermissions(Utils.getActivity(object), permissions);
 
-        if (deniedPermissions.size() > 0) {
-            if (object instanceof Activity) {
-                ((Activity) object).requestPermissions(deniedPermissions.toArray(new String[deniedPermissions.size()]), requestCode);
-            } else if (object instanceof Fragment) {
-                ((Fragment) object).requestPermissions(deniedPermissions.toArray(new String[deniedPermissions.size()]), requestCode);
+            if (deniedPermissions.size() > 0) {
+                if (object instanceof Activity) {
+                    ActivityCompat.requestPermissions((Activity) object,deniedPermissions.toArray(new String[deniedPermissions.size()]),requestCode);
+                } else if (object instanceof Fragment) {
+                    ((Fragment) object).requestPermissions(deniedPermissions.toArray(new String[deniedPermissions.size()]), requestCode);
+                } else {
+                    throw new IllegalArgumentException(object.getClass().getName() + " is not supported,only supports Activity or Fragment");
+                }
             } else {
-                throw new IllegalArgumentException(object.getClass().getName() + " is not supported,only supports Activity or Fragment");
+                doExecuteSuccess(requestCode, requestPermissionCallBack);
             }
-        } else {
-            doExecuteSuccess(requestCode, requestPermissionCallBack);
         }
     }
 

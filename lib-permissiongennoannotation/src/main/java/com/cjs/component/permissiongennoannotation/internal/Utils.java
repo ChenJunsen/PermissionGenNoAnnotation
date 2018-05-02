@@ -1,29 +1,25 @@
 package com.cjs.component.permissiongennoannotation.internal;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by namee on 2015. 11. 18..
- */
 final public class Utils {
   private Utils(){}
 
   public static boolean isOverMarshmallow() {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    return Build.VERSION.SDK_INT >= 23;
   }
 
-  @TargetApi(value = Build.VERSION_CODES.M)
   public static List<String> findDeniedPermissions(Activity activity, String... permission){
     List<String> denyPermissions = new ArrayList<>();
     for(String value : permission){
-      if(activity.checkSelfPermission(value) != PackageManager.PERMISSION_GRANTED){
+      if(ActivityCompat.checkSelfPermission(activity,value) != PackageManager.PERMISSION_GRANTED){
         denyPermissions.add(value);
       }
     }
