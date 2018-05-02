@@ -49,6 +49,7 @@ public class PermissionGenNoAnnotation {
         return new PermissionGenNoAnnotation(fragment);
     }
 
+
     /**
      * 设置需要获取的权限
      * @param permissions 参考{@link android.Manifest.permission}

@@ -16,6 +16,7 @@ final public class Utils {
     return Build.VERSION.SDK_INT >= 23;
   }
 
+
   public static List<String> findDeniedPermissions(Activity activity, String... permission){
     List<String> denyPermissions = new ArrayList<>();
     for(String value : permission){
